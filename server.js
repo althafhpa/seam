@@ -24,9 +24,9 @@ const server = app.listen(0, () => {
   console.log(`Get devices at: ${apiUrl}/get-devices`);
 });
 
-app.get('/get-client-session-token', async (req, res) => {
+app.post('/get-client-session-token', async (req, res) => {
   try {
-    const userId = 'single_user_11'; // Replace with actual user ID logic
+    const userId = req.body.userId || 'single_user_11'; // Use provided userId or default
 
     let clientSession;
     try {
