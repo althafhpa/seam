@@ -28,7 +28,7 @@ const startServer = () => {
 
 app.post('/get-client-session-token', async (req, res) => {
   try {
-    const userId = req.body.userId || 'single_user_11'; // Use provided userId or default
+    const userId = req.body.userId || 'single_user_11';
 
     let clientSession;
     try {
@@ -63,10 +63,8 @@ app.get('/get-devices', async (req, res) => {
   }
 });
 
-// Only start the server if this file is being run directly
 if (require.main === module) {
   startServer();
 }
 
-// Export the app for potential use in other files
 module.exports = app;
