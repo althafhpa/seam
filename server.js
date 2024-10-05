@@ -69,7 +69,9 @@ app.get('/get-devices', async (req, res) => {
 
 const server = app.listen(0, () => {
   const port = server.address().port;
-  const fullUrl = `http://localhost:${port}`;
+  const host = process.env.HOST || 'localhost';
+  const protocol = process.env.PROTOCOL || 'http';
+  const fullUrl = `${protocol}://${host}:${port}`;
   console.log(`Server running at: ${fullUrl}`);
   console.log(`Get client session token at: ${fullUrl}/get-client-session-token`);
   console.log(`Get devices at: ${fullUrl}/get-devices`);
