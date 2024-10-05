@@ -12,17 +12,19 @@ const seam = new Seam(process.env.SEAM_API_KEY);
 
 let apiUrl;
 
-const server = app.listen(0, () => {
-  const port = server.address().port;
-  const host = process.env.HOST || 'localhost';
-  const protocol = process.env.PROTOCOL || 'http';
-  const localUrl = `${protocol}://${host}:${port}`;
-  apiUrl = process.env.API_URL || localUrl;
+const startServer = () => {
+  const server = app.listen(0, () => {
+    const port = server.address().port;
+    const host = process.env.HOST || 'localhost';
+    const protocol = process.env.PROTOCOL || 'http';
+    const localUrl = `${protocol}://${host}:${port}`;
+    apiUrl = process.env.API_URL || localUrl;
 
-  console.log(`Server running at: ${apiUrl}`);
-  console.log(`Get client session token at: ${apiUrl}/get-client-session-token`);
-  console.log(`Get devices at: ${apiUrl}/get-devices`);
-});
+    console.log(`Server running at: ${apiUrl}`);
+    console.log(`Get client session token at: ${apiUrl}/get-client-session-token`);
+    console.log(`Get devices at: ${apiUrl}/get-devices`);
+  });
+};
 
 app.post('/get-client-session-token', async (req, res) => {
   try {
@@ -60,3 +62,11 @@ app.get('/get-devices', async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch devices' });
   }
 });
+
+// Only start the server if this file is being run directly
+if (require.main === module) {
+  startServer();
+}
+
+// Export the app for potential use in other files
+module.exports = app;
